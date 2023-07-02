@@ -46,3 +46,20 @@
 
     </div>
 </div>
+
+<div class="form-group">
+    <label class="control-label col-lg-3">M-PESA Private Key  </label>
+    <div class="col-lg-7">
+        <input type="text" name="privateKey"   class="form-control"  value="${paymentConfig?.privateKey}">
+
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label class="control-label col-lg-3">M-PESA Public Key  </label>
+    <div class="col-lg-7">
+        <input type="text" name="publicPublic"   class="form-control"  value="${paymentConfig?.publicPublic}">
+
+    </div>
+</div>

@@ -49,7 +49,7 @@ class MpesaService {
         def accessToken = "Bearer "+encryptAuthToken(publicKey, apiKey)
         println("Auth Token:"+ accessToken)
 
-        String urlS = "https://openapi.m-pesa.com/openapi/ipg/v2/vodafoneGHA/getSession/"
+        String urlS = "https://openapi.m-pesa.com/openapi/ipg/v2/vodacomTZN/getSession/"
 
         URL url = new URL(urlS)
         HttpsURLConnection con = (HttpsURLConnection) url.openConnection()
@@ -118,8 +118,6 @@ class MpesaService {
 
             InputStream test = connection.getErrorStream();
             String result = new BufferedReader(new InputStreamReader(test)).lines().collect(Collectors.joining("\n"));
-
-            println("results loan: "+result)
 
             if (result != null && result.length() != 0) {
                 JSONObject object = new JSONObject(result)
