@@ -63,3 +63,10 @@
 
     </div>
 </div>
+
+<div class="form-group">
+    <label class="control-label col-lg-3">Send loan automatic?  </label>
+    <div class="col-lg-7">
+        <g:checkBox name="sendAutoLoan" value="${paymentConfig.sendAutoLoan}" />
+    </div>
+</div>

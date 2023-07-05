@@ -43,7 +43,7 @@ class GatewayController {
     }
 
     def testData() {
-        String sample = "id.23456.kiasi.90000"
+        String sample = "id.56023083.kiasi.1000"
         saveLoanRequest(sample,"+255766545878")
         render "Ok"
     }
@@ -57,12 +57,15 @@ class GatewayController {
             def regNo = data[1]
 
             def userInstance = SecUser.findByRegistration_no(regNo)
+            System.out.println("User loan request by "+userInstance.full_name+" no:"+userInstance.phone_number)
 
-            if (userInstance && userInstance.phone_number.replace("+","") == mobileNo.replace("+", "")) {
+            if (userInstance && userInstance.phone_number.replace("+","") == mobileNo.replace("+", "") && Integer.parseInt(amount) <= userInstance.loan_limit) {
 
                 loanCalculatorService.genericSaveLoan(userInstance, Double.parseDouble(amount))
 
             } else {
+                System.out.println("User loan request by "+userInstance.full_name+" : Hana vigezo vya namba and loan limit")
+
                 success = false
             }
         } else {

@@ -605,9 +605,9 @@ class SecUserController {
         //def company_id=User.get(user_id)?.company_id
         //def userInstance=null
 
-        def userInstance = SecUser.executeQuery("from SecUser where  full_name like ? " +
-                "  or username like ? or registration_no like ? or phone_number like ? " +
-                " ", [searchstring, searchstring, searchstring, searchstring],params)
+        def userInstance = SecUser.executeQuery("from SecUser where  full_name like :searchstring " +
+                "  or username like :searchstring or registration_no like :searchstring or phone_number like :searchstring " +
+                " ", [searchstring],params)
 
 
         // println(searchstring+"out:"+userInstance)

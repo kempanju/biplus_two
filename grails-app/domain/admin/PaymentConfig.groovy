@@ -7,7 +7,7 @@ import java.sql.Timestamp
 class PaymentConfig {
     int id,version
     Integer fees=0, days_before_refund=15,deleted=0,card_expired_years,kopafasta_fee
-    Boolean loan_opened,product_opened
+    Boolean loan_opened,product_opened, sendAutoLoan
     SecUser created_by, deleted_by
     Timestamp created_at
     String mlipa_code,mlipa_username,mlipa_password
@@ -26,6 +26,7 @@ class PaymentConfig {
         days_before_refund(nullable: true)
         loan_opened(nullable: true)
         privateKey nullable: true
+        sendAutoLoan nullable: true
         publicPublic nullable: true
         created_at(nullable: true)
         created_by(nullable: true)

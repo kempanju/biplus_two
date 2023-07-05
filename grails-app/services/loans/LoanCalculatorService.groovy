@@ -3,9 +3,12 @@ package loans
 import admin.PaymentConfig
 import finance.SecUser
 import grails.gorm.transactions.Transactional
+import org.grails.web.json.JSONObject
 
 @Transactional
 class LoanCalculatorService {
+
+    MpesaService mpesaService;
 
     def serviceMethod() {
 
@@ -19,7 +22,7 @@ class LoanCalculatorService {
         def loanInstance = new LoanRequest();
         loanInstance.amount = amount
 
-        loanInstance.loan_status = 2
+        loanInstance.loan_status = 1
         loanInstance.loan_repaid = false
         loanInstance.payment_sent = false
 
@@ -36,7 +39,32 @@ class LoanCalculatorService {
         def created_atd = new java.sql.Timestamp(current_time.time.time)
         loanInstance.created_at = created_atd
         if(loanInstance.save(failOnError:true,flush:true)) {
+            if(paymentConfig.sendAutoLoan && !userInstance.accountLocked) {
+                def loanBalanceInstance = UserLoan.findByUser(userInstance)
+                boolean valid = loanBalanceInstance != null && loanBalanceInstance.unpaidLoan < 0 ? true : !(loanBalanceInstance != null && loanBalanceInstance.unpaidLoan > 0);
 
+                if(valid) {
+                    JSONObject output = mpesaService.processLoan(loanInstance.amount, loanInstance.request_unique, loanInstance.request_unique, loanInstance.user_id.phone_number)
+                    loanInstance.payment_feedback = output.get("message")
+                    if(output.get("code")==201) {
+                        loanInstance.payment_sent = true
+                        loanInstance.loan_status = 2
+                    } else {
+                        loanInstance.payment_sent = false
+                        loanInstance.loan_status = 0
+                    }
+                    System.out.println("User loan request by "+userInstance.full_name+" : Loan processed!")
+                } else {
+                    loanInstance.loan_status = 0
+                    loanInstance.payment_feedback = "Existing loan failed"
+                    System.out.println("User loan request by "+userInstance.full_name+" : He have existing loan")
+                }
+
+            } else {
+                System.out.println("User loan request by "+userInstance.full_name+" : Account locked or closed")
+
+            }
+            loanInstance.save()
         }
     }
 }

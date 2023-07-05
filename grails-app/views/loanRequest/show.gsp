@@ -113,6 +113,12 @@
                         </tr>
                         <tr>
                             <td>
+                                <span class="text-semibold">Interest amount</span>
+                            </td>
+                            <td>${fieldValue(bean: loanRequest, field: "interestAmount")} TZS</td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <span class="text-semibold">Loan fee</span>
                             </td>
                             <td>${fieldValue(bean: loanRequest, field: "interest_percentage")}%</td>

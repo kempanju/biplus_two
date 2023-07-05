@@ -9,7 +9,7 @@ class LoanRequest {
     SecUser user_id
     DictionaryItem category
     Double amount,loan_amount_total
-    Integer instruments,loan_status,next_instruments, insurance_fee
+    Integer instruments,loan_status,next_instruments, insurance_fee, interestAmount
     String mlipa_feedback,mobile_number
     Boolean payment_sent,loan_repaid
     Float interest_percentage
@@ -33,6 +33,7 @@ class LoanRequest {
         last_payment_date nullable: true
         insurance_fee nullable: true
         loan_amount_total formula:"(amount+insurance_fee+ ((interest_percentage/100)*amount))"
+        interestAmount formula : "(interest_percentage/100)*amount"
         loan_repaid nullable: true
         next_instruments nullable: true
         repaid_date nullable: true

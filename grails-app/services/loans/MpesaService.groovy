@@ -121,7 +121,7 @@ class MpesaService {
 
             if (result != null && result.length() != 0) {
                 JSONObject object = new JSONObject(result)
-                output = object.get("output_ResponseDesc")
+                output = object .has("output_ResponseDesc") ? object.get("output_ResponseDesc") : "Failed to send money"
 
             }
         }
