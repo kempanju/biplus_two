@@ -1,10 +1,12 @@
 package admin
 
+import finance.SecUser
 import finance.UserLogs
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import loans.LoanRequest
+import loans.UserLoan
 import pl.touk.excel.export.WebXlsxExporter
 
 import static org.springframework.http.HttpStatus.*
@@ -61,7 +63,7 @@ class CustomersController {
 
     @Transactional
     def sendBulkMessages(){
-        def userList=SecUser.findAllByUser_groupAndUser_deleted(Customers.get(params.company_id),false)
+        def userList= SecUser.findAllByUser_groupAndUser_deleted(Customers.get(params.company_id),false)
         int i = 1;
         userList.each {
             String mesagedata = params.message
@@ -114,21 +116,22 @@ class CustomersController {
     }
 
     def printLoanCsv(){
+        println(params)
 
-        def nameData=System.currentTimeMillis()+".xlsx"
-        def zailspath = servletContext.getRealPath("/") + "csvfiles/"+nameData
+       // def nameData=System.currentTimeMillis()+".xlsx"
+       // def zailspath = servletContext.getRealPath("/") + "csvfiles/"+nameData
 
         //  def headers = ['M-LIPA No', 'Full name', 'Registration no', 'District', 'Location','Phone number']
 
 
 
         //def userData=User.findAllByBatch_no(params.batchno)
-        def userData=LoanRequest.executeQuery("from LoanRequest where loan_repaid=0 and loan_status=2 and customer_id=? group by user_id",[Customers.get(params.id)])
+        def userData=LoanRequest.executeQuery("from LoanRequest where loan_repaid=0 and loan_status=2 and customer_id=:customerInstance group by user_id",[customerInstance:Customers.get(params.id)])
         def headers = ['Full name', 'Registration No','Customer Name','Amount','Phone Number','Unique ID']
         try {
             new WebXlsxExporter().with {
                 // def responseD = response.outputStream
-                setResponseHeaders(response)
+                setResponseHeaders(response,System.currentTimeMillis()+".xlsx")
                 fillHeader(headers)
                 int i=1
                 userData.each {
@@ -137,7 +140,9 @@ class CustomersController {
                     def registrationNo=it.user_id.registration_no
                     def customer_name=it.customer_id.name
                     def phone_number=it.user_id.phone_number
-                    def amount=it.user_id.loan_amount
+
+                    def unpaidLoan = UserLoan.findByUser(it.user_id)
+                    def amount= unpaidLoan.unpaidLoan
                     def uniqueID=it.request_unique
                     // String reg_no="1141010023124"
 
@@ -150,8 +155,7 @@ class CustomersController {
                     i++
 
                 }
-
-                //add(userData, withProperties)
+               // add(userData, withProperties)
                 save(response.outputStream)
             }
         }catch (Exception e){

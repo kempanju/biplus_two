@@ -1,3 +1,4 @@
+<%@ page import="loans.UserLoan" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -67,7 +68,10 @@
                             <td>
                                 <span class="text-semibold">Remained loan amount</span>
                             </td>
-                            <td>${fieldValue(bean: loanRepayment, field: "user_id.loan_amount")} TZS</td>
+                            <%
+                                def totals = UserLoan.findByUser(loanRepayment.user_id)?.unpaidLoan
+                            %>
+                            <td>${formatAmountString(name:(int)totals)}  TZS</td>
                         </tr>
 
                         <tr>

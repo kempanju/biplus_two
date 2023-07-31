@@ -170,6 +170,7 @@
                         <td style="max-width: 300px"><p>${fieldValue(bean: loanRequest, field: "payment_feedback")}</p>
                         </td>
                         <tr>
+                            <td>Full Name ${loanRequest.getFullName()}</td>
 
                         </tr>
 

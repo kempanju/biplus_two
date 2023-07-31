@@ -36,6 +36,7 @@ class LoanRequestController {
         respond loanRequestService.list(params), model:[loanRequestCount: loanRequestService.count()]
     }
 
+
     def printLoanExcel(){
         def nameData=System.currentTimeMillis()+".xlsx"
         // def zailspath = servletContext.getRealPath("/") + "csvfiles/"+nameData

@@ -1,4 +1,4 @@
-<%@ page import="finance.SecUser; loans.LoanRepayment; loans.LoanRequest" %>
+<%@ page import="loans.UserLoan; finance.SecUser; loans.LoanRepayment; loans.LoanRequest" %>
 !DOCTYPE html>
 <html>
 <head>
@@ -121,7 +121,7 @@
                                         <h3 class="no-margin">
 
                                             <%
-                                                def amountData= SecUser.executeQuery("select sum (loan_amount) from SecUser where have_loan=true ")[0]
+                                                def amountData= UserLoan.executeQuery("select sum (unpaidLoan) from UserLoan ")[0]
 
 
                                                 if(!amountData){
@@ -134,7 +134,7 @@
                                         Inayodaiwa
                                        <div class="text-muted text-size-small">
 
-                                           na ${formatAmountString(name: (int) SecUser.executeQuery(" from SecUser where have_loan=true ").size())} artists
+                                           na ${formatAmountString(name: (int) UserLoan.executeQuery(" from UserLoan where unpaidLoan>0 ").size())} artists
 
                                         </div>
 

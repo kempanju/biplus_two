@@ -33,6 +33,15 @@ class LoanRepaymentController {
         respond loanRepaymentService.list(params), model:[loanRepaymentCount: loanRepaymentService.count()]
     }
 
+    def loanByUser(Long id){
+
+        session["activePage"] = "loans"
+        def userInstance = SecUser.read(id)
+        def loanList = LoanRepayment.findAllByUser_id(userInstance)
+        render view: 'loanByUser', model: [loanRepaymentList: loanList, userInstance:userInstance]
+    }
+
+
     def printRepaymentExcel(){
         def nameData=System.currentTimeMillis()+".xlsx"
         // def zailspath = servletContext.getRealPath("/") + "csvfiles/"+nameData
@@ -236,6 +245,14 @@ class LoanRepaymentController {
         respond new LoanRepayment(params)
     }
 
+    def addRepayment(Long id) {
+        session["activePage"] = "loans"
+        def userInstance = SecUser.read(id)
+
+        render view: 'addRepayment', model: [userInstance: userInstance]
+    }
+
+    @Transactional
     def save(LoanRepayment loanRepayment) {
         if (loanRepayment == null) {
             notFound()
@@ -243,7 +260,13 @@ class LoanRepaymentController {
         }
 
         try {
-            loanRepaymentService.save(loanRepayment)
+            if(loanRepaymentService.save(loanRepayment)) {
+               def userInstance = loanRepayment.user_id
+               def loanInstance = UserLoan.findByUser(userInstance)
+                if(loanInstance.unpaidLoan <=0 ) {
+                    LoanRequest.executeUpdate("update LoanRequest set loan_repaid=1 where user_id=:userId",[userId:userInstance])
+                }
+            }
         } catch (ValidationException e) {
             respond loanRepayment.errors, view:'create'
             return

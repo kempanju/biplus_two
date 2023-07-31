@@ -1,4 +1,4 @@
-<%@ page import="finance.SecRole; finance.SecUserSecRole; finance.SecUser; loans.LoanRequest" %>
+<%@ page import="loans.UserLoan; finance.SecRole; finance.SecUserSecRole; finance.SecUser; loans.LoanRequest" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -233,32 +233,11 @@
 
             <%
 
-                def amountData = SecUser.executeQuery("select sum (loan_amount) from SecUser where have_loan=true and agent_id=:userInstance", [userInstance: secUser])[0]
-
-
-                def totalPaidAmount = LoanRequest.executeQuery("select sum (amount) from LoanRequest where loan_status=2 and loan_repaid=1 and user_id.agent_id=:userInstance", [userInstance: secUser])[0];
-
-                def totalPaidAmountInterest = LoanRequest.executeQuery("select sum (loan_amount_total) from LoanRequest where loan_status=2 and loan_repaid=1 and user_id.agent_id=:userInstance", [userInstance: secUser])[0];
-                def profitAmount = 0
-                if (!totalPaidAmountInterest) {
-                    totalPaidAmountInterest = 0
-                }
-
-                if (totalPaidAmountInterest && totalPaidAmount) {
-                    profitAmount = (totalPaidAmountInterest - totalPaidAmount) * 0.2
-
-
-                }
-
-
-                if (!amountData) {
-                    amountData = 0
-                }
-
+                def userLoanInstance = UserLoan.findByUser(secUser)
 
             %>
 
-            <g:link class="create" controller="cardPayments" action="cardByUser"
+            <g:link class="create" controller="loanRepayment" action="loanByUser"
                     id="${secUser.id}">
                 <!-- Members online -->
                 <div class="panel bg-teal-400">
@@ -268,15 +247,15 @@
                         </div>
 
                         <h3 class="no-margin">
-                            ${formatAmountString(name: (int) amountData)}
+                           <g:if test="${userLoanInstance}"> ${formatAmountString(name: (int) userLoanInstance?.unpaidLoan)} </g:if> <g:else>0</g:else>
 
                         </h3>
                         Not returned Loan
 
                         <div class="text-muted text-size-small">
 
-                            ${formatAmountString(name: (int) totalPaidAmountInterest)}
-                            Fully returned
+                        <g:if test="${userLoanInstance}"> ${formatAmountString(name: (int) userLoanInstance?.loan_amount)} </g:if><g:else>0</g:else>
+                            Loan Taken
                         </div>
 
                     </div>
@@ -298,14 +277,10 @@
                         </div>
 
                         <h3 class="no-margin">
-                            ${formatAmountString(name: (int) profitAmount)} TZS
+                           0
 
                         </h3>
                         Profit
-                        <div class="text-muted text-size-small">
-                            ${formatAmountString(name: (int) SecUser.countByAgent_id(secUser))}
-                            Customers
-                        </div>
 
                     </div>
 

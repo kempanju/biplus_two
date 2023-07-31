@@ -53,18 +53,18 @@ class GatewayController {
         boolean  success=  true;
         String [] data =  msg.split("\\.")
         if(data.length == 4) {
-            def amount = data[3]
+            def amount = data[3].replace(",","")
             def regNo = data[1]
 
             def userInstance = SecUser.findByRegistration_no(regNo)
-            System.out.println("User loan request by "+userInstance.full_name+" no:"+userInstance.phone_number)
 
             if (userInstance && userInstance.phone_number.replace("+","") == mobileNo.replace("+", "") && Integer.parseInt(amount) <= userInstance.loan_limit) {
+                System.out.println("User loan request by "+userInstance.full_name+" no:"+userInstance.phone_number)
 
                 loanCalculatorService.genericSaveLoan(userInstance, Double.parseDouble(amount))
 
             } else {
-                System.out.println("User loan request by "+userInstance.full_name+" : Hana vigezo vya namba and loan limit")
+                System.out.println("User loan request by RegNo:"+regNo+" : Hana vigezo vya namba and loan limit")
 
                 success = false
             }

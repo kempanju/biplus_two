@@ -4,6 +4,8 @@ import admin.Customers
 import admin.DictionaryItem
 import finance.SecUser
 
+import java.sql.Timestamp
+
 class LoanRequest {
     int id,version
     SecUser user_id
@@ -13,12 +15,13 @@ class LoanRequest {
     String mlipa_feedback,mobile_number
     Boolean payment_sent,loan_repaid
     Float interest_percentage
-    java.sql.Timestamp created_at,repaid_date
+    Timestamp created_at, repaid_date
     String request_code,payment_feedback
     Date last_payment_date
 
     Customers customer_id
     String  request_unique
+
 
     static constraints = {
         mlipa_feedback nullable: true
@@ -58,5 +61,9 @@ class LoanRequest {
         created_at = new java.sql.Timestamp(current_time.time.time)
         last_payment_date =nextPayment
         request_unique="BP"+System.currentTimeMillis()
+    }
+
+    String getFullName () {
+        return user_id.full_name.substring(0,1);
     }
 }

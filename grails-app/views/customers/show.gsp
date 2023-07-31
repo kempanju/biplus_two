@@ -49,10 +49,10 @@
                                             def totalAmountData = 0;
                                             try {
                                                 if(customers.loan_type.code=="IDLOAN") {
-                                                    totalAmountData = loans.LoanRequest.executeQuery("select sum (amount) from LoanRequest where loan_status=2 and customer_id=:customer ", [customer:customers])[0]
+                                                    totalAmountData = LoanRequest.executeQuery("select sum (amount) from LoanRequest where loan_status=2 and customer_id=:customer ", [customer:customers])[0]
 
                                                 }else {
-                                                    totalAmountData = loans.LoanRequest.executeQuery("select sum (amount) from LoanRequest where loan_status=2 and customer_id=:customer and month(created_at)=MONTH(CURRENT_DATE()) and year(created_at)=YEAR(CURRENT_DATE)", [customer:customers])[0]
+                                                    totalAmountData = LoanRequest.executeQuery("select sum (amount) from LoanRequest where loan_status=2 and customer_id=:customer and month(created_at)=MONTH(CURRENT_DATE()) and year(created_at)=YEAR(CURRENT_DATE)", [customer:customers])[0]
 
                                                 }
                                                 if (!totalAmountData) {
