@@ -1066,8 +1066,6 @@ class SecUserController {
 
         String returnUrl = grailsApplication.config.deliverySMS + "/deliveryRegistration"
 
-
-
         String sms_mtandao_json = smsMtandaoSendMessagesLoan(phonenumber: phonenumber, messagesent: message, returnUrl: returnUrl)
 
         def userLogsInstanceD = new UserLogs()

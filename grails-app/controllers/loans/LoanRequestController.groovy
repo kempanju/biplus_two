@@ -1,6 +1,7 @@
 package loans
 
 import admin.*
+import bi.plus.TigoPesaService
 import finance.SecUser
 import finance.UserLogs
 import grails.converters.JSON
@@ -22,6 +23,7 @@ class LoanRequestController {
 
     LoanRequestService loanRequestService
     MpesaService mpesaService;
+    TigoPesaService tigoPesaService;
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -309,13 +311,18 @@ class LoanRequestController {
     @Transactional
     def processLoan() {
         println(params)
+        String channel =  params.channel
         def loanInstance=LoanRequest.get(params.id)
         loanInstance.loan_status=6
         loanInstance.loan_repaid=false
         loanInstance.payment_sent=true
         JSONObject output = null;
         if(loanInstance.save(failOnError:true,flush:true)){
-            output =  mpesaService.processLoan(loanInstance.amount,loanInstance.request_unique,loanInstance.request_unique, loanInstance.user_id.phone_number)
+            if(channel.equals("Tigo")) {
+                output = tigoPesaService.processLoan((int)loanInstance.amount, loanInstance.request_unique, loanInstance.request_unique, loanInstance.user_id.phone_number);
+            }else {
+                output = mpesaService.processLoan(loanInstance.amount, loanInstance.request_unique, loanInstance.request_unique, loanInstance.user_id.phone_number)
+            }
         }
         String msg = output.get("message")
         flash.message ="Msg : "+msg

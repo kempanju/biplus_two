@@ -1,0 +1,15 @@
+version: "3.3"
+services:
+
+  biplus:
+    build: .
+    image: mchunguzi/biplus:latest
+    container_name: biplus
+    ports:
+      - "4040:8080"
+      - "4141:4141"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+
+

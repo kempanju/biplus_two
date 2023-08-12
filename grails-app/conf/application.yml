@@ -13,6 +13,8 @@ info:
         name: '@info.app.name@'
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
+server:
+    max-http-header-size: 20000
 spring:
     jmx:
         unique-names: true
@@ -86,6 +88,7 @@ grails:
                 scriptlet: html
                 taglib: none
                 staticparts: none
+
 management:
     endpoints:
         jmx:
@@ -103,16 +106,19 @@ dataSource:
     jmxExport: true
     driverClassName: com.mysql.cj.jdbc.Driver
     dialect: org.hibernate.dialect.MySQL8Dialect
-    username: root
-    #username: mkononi
-    #password: 'mkononi@oysterbay'
-    password: 'p@ssw0rd'
+    username: ${DATABASE_USERNAME:mkononi}
+    password: ${DATABASE_PASSWORD:mkononi@oysterbay}
 
 environments:
     development:
         systemLink: http://localhost:8080
         businessCode: 000000
         paymentUrl: https://openapi.m-pesa.com/sandbox/ipg/v2/vodacomTZN/b2cPayment/
+        paymentTigoUrl: http://13.245.203.150:8888/t/biplus/b2c/test
+        tigoSenderNo: 25565404050
+        tigoSenderName: BI PLUS FINANCE LTD
+        smsMtandaoUrl: https://messaging-service.co.tz/api/sms/v1/test/text/single
+        brandId: 3463
         dataSource:
             dbCreate: update
             url: jdbc:mysql://localhost:3306/db_test?useSSL=false&zeroDateTimeBehavior=convertToNull&MVCC=TRUE&LOCK_TIMEOUT=10000&DB_CLOSE_ON_EXIT=FALSE
@@ -121,12 +127,18 @@ environments:
             dbCreate: update
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
+        serverURL: https://biplus.habarisasa.com
         systemLink: http://www.tacip.co.tz:8080/kopafasta
         businessCode: 305358
         paymentUrl: https://openapi.m-pesa.com/openapi/ipg/v2/vodacomTZN/b2cPayment/
+        paymentTigoUrl: http://13.245.203.150:8888/t/biplus/b2c/test
+        tigoSenderNo: 25566000145
+        tigoSenderName: BI PLUS FINANCE LTD
+        smsMtandaoUrl: https://messaging-service.co.tz/api/sms/v1/test/text/single
+        brandId: 3464
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://localhost:3306/db_kopa?useSSL=false&zeroDateTimeBehavior=convertToNull&MVCC=TRUE&LOCK_TIMEOUT=10000&DB_CLOSE_ON_EXIT=FALSE&serverTimezone=Africa/Nairobi
+            url: ${DATABASE_URL:jdbc:mysql://localhost:3306/db_kopa?useSSL=false&zeroDateTimeBehavior=convertToNull&MVCC=TRUE&LOCK_TIMEOUT=10000&DB_CLOSE_ON_EXIT=FALSE&serverTimezone=Africa/Nairobi}
             properties:
                 jmxEnabled: true
                 initialSize: 5

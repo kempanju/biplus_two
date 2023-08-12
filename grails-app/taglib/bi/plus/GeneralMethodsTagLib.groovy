@@ -236,31 +236,28 @@ class GeneralMethodsTagLib {
             String phonenumber=attrs.phonenumber
             String messagesent=attrs.messagesent
             String returnUrl=attrs.returnUrl
+            String reference = System.currentTimeMillis().toString()
 
             phonenumber = phonenumber.replace("+", "")
             JSONObject jsonObject = new JSONObject()
-            jsonObject.put("token", "1d3b4b6104a072f1c221f6e9e5c9ad87")
-            jsonObject.put("sender", "kopafasta")
-            jsonObject.put("message", messagesent)
-            jsonObject.put("push", returnUrl)
-            JSONObject jsondata = new JSONObject()
-            jsondata.put("message_id1", phonenumber)
-            jsonObject.put("recipient", jsondata)
-            // println(jsonObject)
+            jsonObject.put("from", "biplus")
+            jsonObject.put("text", messagesent)
+            jsonObject.put("to", phonenumber)
+            jsonObject.put("reference",reference)
+
             def post = new URL(grailsApplication.config.smsMtandaoUrl.toString()).openConnection()
             def message = jsonObject.toString()
             post.setRequestMethod("POST")
             post.setDoOutput(true)
             post.setRequestProperty("Content-Type", "application/json")
+            post.setRequestProperty("Authorization","Basic dGVzdDE6MTIzNDU2")
             post.getOutputStream().write(message.getBytes("UTF-8"))
             def postRC = post.getResponseCode()
             //println("out:" + postRC);
             if (postRC.equals(200)) {
                 output=post.getInputStream().getText()
 
-
-
-                // println(post.getInputStream().getText())
+                 println(post.getInputStream().getText())
             }
         }catch (Exception e){
             e.printStackTrace()

@@ -194,7 +194,9 @@
                 </div>
             </g:if>
             <sec:ifAnyGranted roles="ROLE_ADMIN">
-                <div class="col-lg-10">
+
+                    <div class="col-lg-10">
+                <g:if test="${loanRequest.loan_status == 2}">
 
                     <div class="col-lg-4">
 
@@ -211,21 +213,29 @@
                             </fieldset>
                         </g:form>
                     </div>
+                </g:if>
+                <g:if test="${loanRequest.loan_status == 0 || loanRequest.loan_status == 1}">
 
-                    <div class="col-lg-4">
+                    <div class="text-left col-lg-8">
                         <g:form method="POST" action="processLoan" class="form-horizontal"  >
                             <fieldset class="form">
                                 <g:hiddenField name="id" value="${loanRequest.id}"/>
                                 <g:hiddenField name="loan_status" value="1"/>
-                                <div class="text-left col-lg-10">
+                                <div class="col-lg-12">
+                                <div class="col-lg-4">
+                                <g:select name="channel" required="required" from="${['Tigo', 'Vodacom']}" noSelection="${['':'Select Channel...']}"/>
+                                </div>
+                                <div class="text-left col-lg-4">
                                     <button type="submit" class="btn btn-success">Process loan <i
                                             class="icon-check position-right"></i>
                                     </button>
 
                                 </div>
+                            </div>
                             </fieldset>
                         </g:form>
                     </div>
+                </g:if>
                 </div>
             </sec:ifAnyGranted>
         </div>

@@ -1,6 +1,7 @@
 package loans
 
 import admin.PaymentConfig
+import bi.plus.TigoPesaService
 import finance.SecUser
 import grails.gorm.transactions.Transactional
 import org.grails.web.json.JSONObject
@@ -9,9 +10,15 @@ import org.grails.web.json.JSONObject
 class LoanCalculatorService {
 
     MpesaService mpesaService;
+    TigoPesaService tigoPesaService;
 
     def serviceMethod() {
 
+    }
+
+    def testLoanRequest(SecUser userInstance, def amount) {
+        def unique = System.currentTimeMillis().toString()
+        String output = tigoPesaService.processLoan(1000, unique, unique, "0713123892")
     }
 
     def genericSaveLoan(SecUser userInstance, def amount){

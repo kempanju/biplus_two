@@ -44,8 +44,8 @@ class GatewayController {
 
     def testData() {
         String sample = "id.56023083.kiasi.1000"
-        saveLoanRequest(sample,"+255766545878")
-        render "Ok"
+        def res = loanCalculatorService.testLoanRequest(null, 500)
+        render res as JSON
     }
 
     @Transactional

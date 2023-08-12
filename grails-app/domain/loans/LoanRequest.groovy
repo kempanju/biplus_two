@@ -64,6 +64,6 @@ class LoanRequest {
     }
 
     String getFullName () {
-        return user_id.full_name.substring(0,1);
+        return user_id == null ? " " : user_id.full_name.substring(0,1);
     }
 }
