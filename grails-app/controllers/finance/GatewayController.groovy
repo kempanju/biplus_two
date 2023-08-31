@@ -2,7 +2,7 @@ package finance
 
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
-import loans.LoanCalculatorService
+
 import loans.LoanRepayment
 import loans.LoanRequest
 import loans.UserLoan

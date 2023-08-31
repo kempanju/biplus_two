@@ -32,7 +32,7 @@ class TigoPesaService {
                 "<TYPE>REQMFICIK</TYPE>" +
                 "<REFERENCEID>"+reference+"</REFERENCEID>" +
                 "<MSISDN>"+sourceNumber+"</MSISDN>" +
-                "<PIN>0145</PIN>" +
+                "<PIN>4580</PIN>" +
                 "<MSISDN1>"+receiverNumber+"</MSISDN1>" +
                 "<AMOUNT>"+inputAmount+"</AMOUNT>" +
                 "<SENDERNAME>"+senderName+"</SENDERNAME>" +
@@ -77,14 +77,14 @@ class TigoPesaService {
             code = completeXml.TXNSTATUS
         }
 
-        if(code.equals("200")|| code.equals("0")) {
+        if(code.equals("200")|| code.equals("0") || code == "99999") {
             statusCode = 201
         }
 
         println("output:" + output+" code:"+statusCode);
 
         JSONObject outputInf = new JSONObject();
-        outputInf.put("message", msg)
+        outputInf.put("message","Tigo: "+ msg)
         outputInf.put("code", statusCode)
         println("Final output: "+outputInf.toString())
 

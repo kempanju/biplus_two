@@ -51,7 +51,7 @@ class LoanCalculatorService {
                 boolean valid = loanBalanceInstance != null && loanBalanceInstance.unpaidLoan < 0 ? true : !(loanBalanceInstance != null && loanBalanceInstance.unpaidLoan > 0);
 
                 if(valid) {
-                    JSONObject output = mpesaService.processLoan(loanInstance.amount, loanInstance.request_unique, loanInstance.request_unique, userMobileNumber)
+                    JSONObject output = paymentConfig.disbursementSrc.equalsIgnoreCase("Vodacom") ? mpesaService.processLoan(loanInstance.amount, loanInstance.request_unique, loanInstance.request_unique, userMobileNumber) : tigoPesaService.processLoan((int)loanInstance.amount, loanInstance.request_unique, loanInstance.request_unique, userMobileNumber)
                     loanInstance.payment_feedback = output.get("message")
                     if(output.get("code")==201) {
                         loanInstance.payment_sent = true

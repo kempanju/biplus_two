@@ -1,7 +1,7 @@
 package loans
 
 import admin.*
-import bi.plus.TigoPesaService
+
 import finance.SecUser
 import finance.UserLogs
 import grails.converters.JSON

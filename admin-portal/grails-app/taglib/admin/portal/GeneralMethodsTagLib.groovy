@@ -71,11 +71,6 @@ class GeneralMethodsTagLib {
 
         String imagename = attrs.name
 
-        println(imagename+" ")
-
-
-
-
         def webrootDir = imagename
 
         if(imagename!=null&&!imagename.contains("http://www")){

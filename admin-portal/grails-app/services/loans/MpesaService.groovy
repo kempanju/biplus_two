@@ -135,7 +135,7 @@ class MpesaService {
             }
 
             if (statusCode == 201) {
-                output = "Request processed successfully"
+                output = "Vodacom: Request processed successfully"
             }
         } else {
             output = " Failed to communicate with MPESA"

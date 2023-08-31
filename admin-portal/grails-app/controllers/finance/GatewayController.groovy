@@ -95,14 +95,22 @@ class GatewayController {
         def requestData = request.XML
 
         def remoteadd = request.getRemoteAddr()
-        println("remote: "+remoteadd)
+        println("remote: "+remoteadd+" request:"+ requestData)
 
         def amount = requestData.AMOUNT.toString()
         def transId = requestData.TXNID
         def MSISDN = requestData.MSISDN
 
         def request_code = requestData.CUSTOMERREFERENCEID
-        def loanInstance = LoanRequest.findByRequest_uniqueAndLoan_repaid(request_code, false)
+
+        String userMobileNumber = request_code
+        if (userMobileNumber.length() == 10) {
+            userMobileNumber = "255" + userMobileNumber.substring(1)
+        } else {
+            userMobileNumber = userMobileNumber.replace("+", "")
+        }
+       // def loanInstance = LoanRequest.findByRequest_uniqueAndLoan_repaid(request_code, false)
+        def userInstance = SecUser.findByRegistration_noOrPhone_number(request_code,userMobileNumber)
 
         String errorCode = "error100"
         String errorMsg = ""
@@ -110,24 +118,23 @@ class GatewayController {
         String flag = "N"
         String content = "FAILED"
         String result = "TF"
-        System.out.println("Amount:"+ amount)
 
-        if(loanInstance) {
-            def userBalance = UserLoan.findByUser(loanInstance.user_id)
+        if(userInstance) {
+            def userBalance = UserLoan.findByUser(userInstance)
 
             if (userBalance.unpaidLoan > 0 && userBalance.unpaidLoan >= Double.parseDouble(amount)) {
                 if(LoanRepayment.countByTransId(transId) == 0) {
                     def userLoanRepayment = new LoanRepayment()
-                    userLoanRepayment.loan_id = loanInstance
+                    userLoanRepayment.loan_id = LoanRequest.findByUser_idAndLoan_repaid(userInstance,false)
                     userLoanRepayment.amount_paid = Double.parseDouble(amount)
-                    userLoanRepayment.user_id = loanInstance.user_id
+                    userLoanRepayment.user_id = userInstance
                     userLoanRepayment.transId = transId
                     userLoanRepayment.requestId = referenceId
 
                     if (userLoanRepayment.save(failOnError: true)) {
-                        def userLoanInstance = UserLoan.findByUser(loanInstance.user_id)
+                        def userLoanInstance = UserLoan.findByUser(userInstance)
                         if (userLoanInstance.unpaidLoan <= 0) {
-                            LoanRequest.executeUpdate("update LoanRequest set loan_repaid=1 where user_id=:userId", [userId: loanInstance.user_id])
+                            LoanRequest.executeUpdate("update LoanRequest set loan_repaid=1 where user_id=:userId", [userId: userInstance])
                         }
                         flag = "Y"
                         errorCode = "error000"
@@ -152,7 +159,7 @@ class GatewayController {
             errorMsg = "Invalid Customer Reference Number"
         }
 
-        String phoneNumber = loanInstance == null ? MSISDN : loanInstance.user_id.phone_number
+        String phoneNumber = userInstance == null ? MSISDN : userInstance.phone_number
         if(phoneNumber.startsWith("255")) {
             phoneNumber = phoneNumber.substring(3)
             phoneNumber ="0"+phoneNumber
