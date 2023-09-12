@@ -189,7 +189,6 @@
 
                             <li><g:link controller='secRole' action="index">Roles</g:link></li>
 
-
                             <li><g:link controller='dictionary' action="index">Dictionary</g:link></li>
                             <li><g:link controller='dictionaryItem' action="index">Dictionary item</g:link></li>
                             <li><g:link controller='region' action="index">Regions</g:link>
@@ -197,6 +196,13 @@
                             <li><g:link controller='paymentConfig' action="index">Admin panel</g:link></li>
                         </ul>
                     </li>
+                    <li class="<g:if test="${activePage=='employer'}">active</g:if>">
+                        <a href="#"><i class=" icon-cog3"></i> <span>Employer portal</span></a>
+                        <ul>
+                        <li><g:link controller='employeeUser' action="index">Users</g:link></li>
+                        </ul>
+                    </li>
+
 
                 </ul>
             </div>

@@ -7,64 +7,115 @@
         <g:layoutTitle default="Grails"/>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
+    <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
+
+    <asset:stylesheet href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" />
+    <asset:stylesheet src="icons/icomoon/styles.css"/>
 
     <asset:stylesheet src="application.css"/>
+    <asset:stylesheet src="bootstrap.css"/>
+    <asset:stylesheet src="darkbox.css"/>
+    <asset:stylesheet src="core.css"/>
+    <asset:stylesheet src="components.css"/>
+    <asset:stylesheet src="colors.css"/>
+    <asset:stylesheet src="general.css"/>
+    <asset:stylesheet src="jquery-ui.css"/>
+    <asset:stylesheet src="bootstrap-datetimepicker.min.css"/>
 
+
+    <asset:javascript src="plugins/loaders/pace.min.js"/>
+
+    <asset:javascript src="core/libraries/jquery.min.js"/>
+
+    <asset:javascript src="jquery-ui/jquery-ui.js"/>
+    <asset:javascript src="core/libraries/bootstrap.min.js"/>
+    <asset:javascript src="plugins/loaders/blockui.min.js"/>
+
+    <asset:javascript src="plugins/ui/moment/moment.min.js"/>
+    <asset:javascript src="core/app.js"/>
+
+    <asset:javascript src="core/libraries/jquery_ui/interactions.min.js"/>
+
+
+
+
+    <asset:javascript src="forms/styling/uniform.min.js"/>
+
+    <asset:javascript src="jquery.elevatezoom.js"/>
+    <asset:javascript src="darkbox.js"/>
+    <asset:javascript src="bootstrap-datetimepicker.min.js"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+    %{--<asset:javascript src="core/app.js"/>
+    <asset:javascript src="pages/gallery.js"/>--}%
+%{--
+    <asset:javascript src="plugins/loaders/pace.min.js"/>
+--}%
+
+
+    %{--<asset:javascript src="core/libraries/bootstrap.min.js"/>
+    <asset:javascript src="plugins/loaders/blockui.min.js"/>
+    <asset:javascript src="jquery-ui/jquery-ui.js"/>
+
+    <asset:javascript src="forms/styling/uniform.min.js"/>
+
+--}%%{--
+    <asset:javascript src="pages/form_inputs.js"/>
+--}%%{--
+
+
+    <asset:javascript src="pages/form_inputs.js"/>
+--}%
+%{--
+    <asset:javascript src="plugins/forms/selects/select2.min.js"/>
+--}%
+
+    %{--
+        <asset:javascript src="plugins/loaders/pace.min.js"/>
+            <asset:javascript src="plugins/media/fancybox.min.js"/>
+
+    --}%
+
+
+%{--
+    <asset:javascript src="plugins/forms/selects/select2.min.js"/>
+--}%
+
+
+   %{-- <asset:javascript src="plugins/notifications/jgrowl.min.js"/>
+    <asset:javascript src="plugins/ui/moment/moment.min.js"/>
+    <asset:javascript src="pages/gallery.js"/>
+--}%
+%{--
+    <asset:javascript src="core/app.js"/>
+--}%
+
+   %{-- <asset:javascript src="pages/form_select2.js"/>--}%
+
+
+%{--
+    <asset:javascript src="core/app.js"/>
+--}%
     <g:layoutHead/>
 </head>
+<body class="navbar-bottom">
 
-<body>
+<g:render template="/layouts/header"/>
+<div class="page-container">
+<g:render template="/layouts/sidemenu"/>
 
-<nav class="navbar navbar-expand-lg navbar-dark navbar-static-top" role="navigation">
-    <a class="navbar-brand" href="/#"><asset:image src="grails.svg" alt="Grails Logo"/></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
-        <ul class="nav navbar-nav ml-auto">
-            <g:pageProperty name="page.nav"/>
-        </ul>
-    </div>
-
-</nav>
-
+%{--
+<g:render template="/layouts/pageheader"/>
+--}%
+<!-- Page container -->
+<div class="content-wrapper">
 <g:layoutBody/>
-
-<div class="footer row" role="contentinfo">
-    <div class="col">
-        <a href="http://guides.grails.org" target="_blank">
-            <asset:image src="advancedgrails.svg" alt="Grails Guides" class="float-left"/>
-        </a>
-        <strong class="centered"><a href="http://guides.grails.org" target="_blank">Grails Guides</a></strong>
-        <p>Building your first Grails app? Looking to add security, or create a Single-Page-App? Check out the <a href="http://guides.grails.org" target="_blank">Grails Guides</a> for step-by-step tutorials.</p>
-
-    </div>
-    <div class="col">
-        <a href="http://docs.grails.org" target="_blank">
-            <asset:image src="documentation.svg" alt="Grails Documentation" class="float-left"/>
-        </a>
-        <strong class="centered"><a href="http://docs.grails.org" target="_blank">Documentation</a></strong>
-        <p>Ready to dig in? You can find in-depth documentation for all the features of Grails in the <a href="http://docs.grails.org" target="_blank">User Guide</a>.</p>
-
-    </div>
-
-    <div class="col">
-        <a href="https://grails-slack.cfapps.io" target="_blank">
-            <asset:image src="slack.svg" alt="Grails Slack" class="float-left"/>
-        </a>
-        <strong class="centered"><a href="https://grails-slack.cfapps.io" target="_blank">Join the Community</a></strong>
-        <p>Get feedback and share your experience with other Grails developers in the community <a href="https://grails-slack.cfapps.io" target="_blank">Slack channel</a>.</p>
-    </div>
 </div>
 
-
-<div id="spinner" class="spinner" style="display:none;">
-    <g:message code="spinner.alt" default="Loading&hellip;"/>
-</div>
-
-<asset:javascript src="application.js"/>
+%{--
+    <asset:javascript src="application.js"/>
+--}%
 
 </body>
 </html>

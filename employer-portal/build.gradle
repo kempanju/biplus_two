@@ -15,7 +15,7 @@ group "employer.portal"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
-apply plugin:"war"
+//apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"com.github.erdi.webdriver-binaries"
 apply plugin:"com.bertramlabs.asset-pipeline"
@@ -72,6 +72,19 @@ dependencies {
     testCompile "org.seleniumhq.selenium:selenium-support:3.14.0"
     testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:3.14.0"
     testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:3.14.0"
+
+    compile group: 'org.xhtmlrenderer', name: 'flying-saucer-pdf-itext5', version: '9.0.6'
+
+    runtime 'mysql:mysql-connector-java:8.0.15'
+    compile 'org.grails.plugins:excel-export:2.1'
+    runtime "org.springframework:spring-test:4.2.1.RELEASE"
+    compile 'org.grails.plugins:rendering:2.0.3'
+    //compile "org.grails.plugins:mail:2.0.0.RC6"
+    compile 'org.grails.plugins:qrcode:0.9'
+
+    compile 'org.grails.plugins:spring-security-core:4.0.5'
+    compile 'org.grails.plugins:spring-security-ui:4.0.0.M1'
+    compile "org.grails.plugins:spring-security-rest:3.0.1"
 }
 
 bootRun {
