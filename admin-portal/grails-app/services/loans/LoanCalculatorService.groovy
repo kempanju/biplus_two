@@ -48,7 +48,7 @@ class LoanCalculatorService {
         if(loanInstance.save(failOnError:true,flush:true)) {
             if(paymentConfig.sendAutoLoan && !userInstance.accountLocked) {
                 def loanBalanceInstance = UserLoan.findByUser(userInstance)
-                boolean valid = loanBalanceInstance != null && loanBalanceInstance.unpaidLoan < 0 ? true : !(loanBalanceInstance != null && loanBalanceInstance.unpaidLoan > 0);
+                boolean valid = loanBalanceInstance != null && loanBalanceInstance.unpaidLoan < 0 ? true : !(loanBalanceInstance != null && loanBalanceInstance.unpaidLoan > userInstance.loan_limit);
 
                 if(valid) {
                     JSONObject output = paymentConfig.disbursementSrc.equalsIgnoreCase("Vodacom") ? mpesaService.processLoan(loanInstance.amount, loanInstance.request_unique, loanInstance.request_unique, userMobileNumber) : tigoPesaService.processLoan((int)loanInstance.amount, loanInstance.request_unique, loanInstance.request_unique, userMobileNumber)
