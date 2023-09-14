@@ -115,6 +115,7 @@ environments:
             dbCreate: update
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
+        serverURL: https://hrbiplus.habarisasa.com
         dataSource:
             dbCreate: update
             url: ${DATABASE_URL:jdbc:mysql://localhost:3306/db_kopa?useSSL=false&zeroDateTimeBehavior=convertToNull&MVCC=TRUE&LOCK_TIMEOUT=10000&DB_CLOSE_ON_EXIT=FALSE&serverTimezone=Africa/Nairobi}

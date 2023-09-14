@@ -231,7 +231,7 @@
                                         </td>
                                         <td colspan="2">
                                             <g:link class="edit" controller="district" action="show"
-                                                    resource="${employee.birth_district_id}">
+                                                    id="${employee?.birth_district_id?.id}">
                                                 ${employee?.birth_district_id?.name}</g:link></td>
                                     </tr>
                                 </g:if>
@@ -263,7 +263,7 @@
                                         </td>
                                         <td colspan="2">
                                             <g:link class="edit" controller="district" action="show"
-                                                    resource="${employee.district_id}">
+                                                    id="${employee?.district_id?.id}">
                                                 ${employee?.district_id?.name}</g:link></td>
                                     </tr>
                                 </g:if>

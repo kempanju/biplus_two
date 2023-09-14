@@ -1,4 +1,4 @@
-<%@ page import="com.softhama.loans.LoanRepayment; com.softhama.loans.LoanRequest; com.softhama.SecUser" %>
+<%@ page import="com.softhama.loans.Employee; com.softhama.loans.LoanRepayment; com.softhama.loans.LoanRequest; com.softhama.SecUser" %>
 
 <%
 
@@ -65,10 +65,9 @@
                             <a href="#"><i class="icon-users4"></i> <span>Users</span></a>
                             <ul>
                                 <li><g:link controller='employee' action="index">Users List<span
-                                        class="label bg-blue-400">${SecUser.count()}</span></g:link></li>
+                                        class="label bg-blue-400">${Employee.countByUser_group(userIntance?.customer)}</span></g:link></li>
                             </ul>
                         </li>
-
 
                     </sec:ifLoggedIn>
 
@@ -80,12 +79,11 @@
 
                             <li><g:link controller="loanRequest" action="index"><i
                                     class="icon-credit-card"></i> <span>Requested<span
-                                    class="label bg-warning-400">${LoanRequest.count()}</span></span>
+                                    class="label bg-warning-400">${LoanRequest.countByCustomer_id(userIntance?.customer)}</span></span>
                             </g:link>
                             </li>
                             <li><g:link controller='loanRepayment' action="index"><i
-                                    class="icon-coins"></i> <span>Repayment<span
-                                    class="label bg-warning-400">${LoanRepayment.count()}</span>
+                                    class="icon-coins"></i> <span>Repayment
                             </span></g:link></li>
 
                         </ul>
