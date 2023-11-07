@@ -996,6 +996,7 @@ class LoanRequestController {
         try {
             def paymentConfig = PaymentConfig.findByDeleted(0)
             loanRequest.insurance_fee = paymentConfig.kopafasta_fee
+            loanRequest.loan_status = 2
             loanRequestService.save(loanRequest)
         } catch (ValidationException e) {
             respond loanRequest.errors, view:'create'

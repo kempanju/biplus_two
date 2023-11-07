@@ -120,6 +120,13 @@
             </g:if>
         </div>
 
+            <div class="page-title">
+                <h5>
+                        <span class="text-semibold">Requested list</span>
+                </h5>
+            </div>
+
+<g:render template="requestlist" model="[userInstance:userInstance]"/>
 
         </div>
     </div>

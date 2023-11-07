@@ -11,12 +11,14 @@ class LoanRepayment {
     java.sql.Timestamp created_at
     String transId
     String requestId
+    String genUniqueId;
 
     static constraints = {
         mlipa_json nullable: true
         created_at nullable: true
         transId nullable:  true, unique: true
         requestId  nullable: true
+        genUniqueId nullable: true, unique: true
     }
     static mapping = {
         table name: 'gen_loan_repayment'

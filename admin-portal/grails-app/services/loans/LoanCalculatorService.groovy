@@ -46,7 +46,7 @@ class LoanCalculatorService {
         def created_atd = new java.sql.Timestamp(current_time.time.time)
         loanInstance.created_at = created_atd
         if(loanInstance.save(failOnError:true,flush:true)) {
-            if(paymentConfig.sendAutoLoan && !userInstance.accountLocked) {
+            if(paymentConfig.sendAutoLoan && !userInstance.accountLocked && userInstance.user_group.loan_allowed) {
                 def loanBalanceInstance = UserLoan.findByUser(userInstance)
                 boolean valid = loanBalanceInstance != null && loanBalanceInstance.unpaidLoan < 0 ? true : !(loanBalanceInstance != null && loanBalanceInstance.unpaidLoan > userInstance.loan_limit);
 

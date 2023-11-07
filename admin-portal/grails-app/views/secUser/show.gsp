@@ -588,6 +588,19 @@ ${secUser.full_name}
 
                     </td>
 
+
+                </tr>
+                <tr>
+                    <td colspan="2">
+
+                        <table>
+                            <tr><td class="text-bold">CODE</td><td class="text-bold">Description</td></tr>
+                            <tr><td>{fName}</td><td>Full Name</td></tr>
+                            <tr><td>{regNo}</td><td>Registration number</td></tr>
+                            <tr><td>{loanAmount}</td><td>Current Loan</td></tr>
+                        </table>
+
+                    </td>
                 </tr>
 
                 <sec:ifAnyGranted roles="ROLE_ADMIN">

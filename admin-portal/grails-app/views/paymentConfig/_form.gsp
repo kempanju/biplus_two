@@ -68,7 +68,7 @@
 <div class="form-group">
     <label class="control-label col-lg-3">Loan Disbursement Source  </label>
     <div class="col-lg-7">
-        <g:select name="disbursementSrc"  from="${['Tigo', 'Vodacom']}" noSelection="${['':'Select Channel...']}"/>
+        <g:select name="disbursementSrc"  from="${['Tigo', 'Vodacom']}" noSelection="${['Tigo':'Select Channel...']}"/>
     </div>
 </div>
 

@@ -259,6 +259,11 @@ class LoanRepaymentController {
             return
         }
 
+        java.text.SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm")
+        Date now = new Date();
+        String strDate = formatter.format(now);
+        loanRepayment.genUniqueId = strDate+""+params.amount_paid
+
         try {
             if(loanRepaymentService.save(loanRepayment)) {
                def userInstance = loanRepayment.user_id

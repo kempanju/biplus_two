@@ -12,6 +12,7 @@ import grails.validation.ValidationException
 import loans.LoanGroup
 import loans.LoanRepayment
 import loans.LoanRequest
+import loans.UserLoan
 import org.grails.web.json.JSONArray
 import org.grails.web.json.JSONObject
 
@@ -1064,13 +1065,26 @@ class SecUserController {
         phonenumber=phonenumber.replace("+", "")
         def message=params.message
 
+        def userInstance = SecUser.get(params.id);
+
+        def userLoan = UserLoan.findByUser(userInstance)
+
+        message = message.replace("{fName}", userInstance.full_name)
+        message = message.replace("{regNo}", userInstance.registration_no)
+        if(userLoan) {
+            message = message.replace("{loanAmount}", userLoan.unpaidLoan.toString())
+        } else {
+            message = message.replace("{loanAmount}", "0")
+        }
+        message = message.replace("{mobile}", userInstance.phone_number)
+
         String returnUrl = grailsApplication.config.deliverySMS + "/deliveryRegistration"
 
         String sms_mtandao_json = smsMtandaoSendMessagesLoan(phonenumber: phonenumber, messagesent: message, returnUrl: returnUrl)
 
         def userLogsInstanceD = new UserLogs()
         userLogsInstanceD.dictionary_id = DictionaryItem.findByCode("SYL")
-        userLogsInstanceD.user_id = SecUser.get(params.id)
+        userLogsInstanceD.user_id = userInstance
         userLogsInstanceD.message = message
         userLogsInstanceD.save()
         flash.message="Message successfully sent."

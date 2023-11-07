@@ -56,7 +56,6 @@ class LoanRequest {
         Date nextPayment = cal.getTime()
         next_instruments=1
         loan_repaid=0
-        loan_status = 1;
         def current_time = Calendar.instance
         created_at = new java.sql.Timestamp(current_time.time.time)
         last_payment_date =nextPayment

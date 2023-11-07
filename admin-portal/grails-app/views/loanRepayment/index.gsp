@@ -1,45 +1,47 @@
 <%@ page import="loans.LoanRepayment" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'loanRepayment.label', default: 'LoanRepayment')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
-    </head>
-    <body>
-    <div class="register_dv expert">
+<head>
+    <meta name="layout" content="main"/>
+    <g:set var="entityName" value="${message(code: 'loanRepayment.label', default: 'LoanRepayment')}"/>
+    <title><g:message code="default.list.label" args="[entityName]"/></title>
+</head>
 
-        <div class="center panel_div_list panel">
+<body>
+<div class="register_dv expert">
 
-            <div class="page-header-content">
-                <div class="page-title">
-                    <h5>
-<g:link class="create" controller="home" action="index"><i class="icon-arrow-left52 position-left"></i>
-    <span class="text-semibold">Repayment list</span></g:link>
-                    </h5>
-                </div>
+    <div class="center panel_div_list panel">
 
-                <div class="heading-elements">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h5>
+                    <g:link class="create" controller="home" action="index"><i
+                            class="icon-arrow-left52 position-left"></i>
+                        <span class="text-semibold">Repayment list</span></g:link>
+                </h5>
+            </div>
 
-                    <div class="col-md-12">
-                        <h2 class="label border-left-info label-striped">Amount:
-                        <%
-                            def totals=0
-                            try {
+            <div class="heading-elements">
 
-                                totals = loans.LoanRepayment.executeQuery("select sum (amount_paid) as total from LoanRepayment")[0]
-                                if(!totals){
-                                    totals=0
-                                }
+                <div class="col-md-12">
+                    <h2 class="label border-left-info label-striped">Amount:
+                    <%
+                        def totals = 0
+                        try {
 
-                            }catch (Exception e){
-
+                            totals = loans.LoanRepayment.executeQuery("select sum (amount_paid) as total from LoanRepayment")[0]
+                            if (!totals) {
+                                totals = 0
                             }
-                        %>
-                        ${formatAmountString(name:(int)totals)} TZS</h2>
-                    </div>
+
+                        } catch (Exception e) {
+
+                        }
+                    %>
+                    ${formatAmountString(name: (int) totals)} TZS</h2>
                 </div>
             </div>
+        </div>
 
         <div id="list-loanRepayment" class="content scaffold-list" role="main">
             <g:if test="${flash.message}">
@@ -48,17 +50,19 @@
             <table class="table datatable-basic">
                 <thead>
                 <tr>
-                    <g:sortableColumn property="id" title="${message(code: 'comapny.name.email', default: 'No')}" />
-                    <g:sortableColumn property="user_id" title="${message(code: 'company.name.label', default: 'Name')}" />
-                    <g:sortableColumn property="amount_paid" title="${message(code: 'company.name.label', default: 'Amount')}" />
-%{--
-                    <g:sortableColumn property="region_id"
-                                      title="${message(code: 'company.name.label', default: 'Remained')}"/>
---}%
-                    <g:sortableColumn property="created_at" title="${message(code: 'company.name.label', default: 'Paid at')}" />
+                    <g:sortableColumn property="id" title="${message(code: 'comapny.name.email', default: 'No')}"/>
+                    <g:sortableColumn property="user_id"
+                                      title="${message(code: 'company.name.label', default: 'Name')}"/>
+                    <g:sortableColumn property="amount_paid"
+                                      title="${message(code: 'company.name.label', default: 'Amount')}"/>
+                    %{--
+                                        <g:sortableColumn property="region_id"
+                                                          title="${message(code: 'company.name.label', default: 'Remained')}"/>
+                    --}%
+                    <g:sortableColumn property="created_at"
+                                      title="${message(code: 'company.name.label', default: 'Paid at')}"/>
 
                     <th class="text-center">Actions</th>
-
 
                 </tr>
                 </thead>
@@ -73,23 +77,24 @@
                             %>
                             ${i + 1 + offset}
                         </td>
-                        <td >
-                    <g:link controller="secUser" action="show" id="${loanInstance.user_id.id}">
-                            ${fieldValue(bean: loanInstance, field: "user_id.full_name")}
-                    </g:link>
+                        <td>
+                            <g:link controller="secUser" action="show" id="${loanInstance.user_id.id}">
+                                ${fieldValue(bean: loanInstance, field: "user_id.full_name")}
+                            </g:link>
                         </td>
-                        <td >${fieldValue(bean: loanInstance, field: "amount_paid")}
+                        <td>${fieldValue(bean: loanInstance, field: "amount_paid")}
                         </td>
-                       %{-- <td >${fieldValue(bean: loanInstance, field: "user_id.loan_amount")}
-                        </td>--}%
-                        <td >${fieldValue(bean: loanInstance, field: "created_at")}
+                        %{-- <td >${fieldValue(bean: loanInstance, field: "user_id.loan_amount")}
+                         </td>--}%
+                        <td>${fieldValue(bean: loanInstance, field: "created_at")}
                         </td>
 
 
                         <td class="text-center">
 
-                            <g:link class="create" action="show" id="${loanInstance.id}" resource="${this.loanInstance}"><button  class="btn btn-primary">Details <i class="icon-arrow-right14 position-right"></i></button></g:link>
-
+                            <g:link class="create" action="show" id="${loanInstance.id}"
+                                    resource="${this.loanInstance}"><button class="btn btn-primary">Details <i
+                                    class="icon-arrow-right14 position-right"></i></button></g:link>
 
                         </td>
                     </tr>
@@ -107,20 +112,21 @@
             </g:if>
         </div>
 
-            <div class="panel" style="margin-top: 100px">
 
 
-                <div class="col-md-5">
-                    <g:link class="create" controller="loanRepayment" action="printRepaymentExcel"><button type="button"
-                                                                                                    class="btn bg-teal-400 btn-labeled"><b><i
-                                class="icon-file-excel"></i></b> Print excel</button></g:link>
 
-                </div>
+        <div class="panel" style="margin-top: 100px">
 
+            <div class="col-md-5">
+                <g:link class="create" controller="loanRepayment" action="printRepaymentExcel"><button type="button"
+                                                                                                       class="btn bg-teal-400 btn-labeled"><b><i
+                            class="icon-file-excel"></i></b> Print excel</button></g:link>
 
             </div>
 
         </div>
+
     </div>
-    </body>
+</div>
+</body>
 </html>
